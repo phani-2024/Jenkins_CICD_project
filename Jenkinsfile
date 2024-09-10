@@ -41,7 +41,7 @@ pipeline {
             steps {
                deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://107.21.53.147:8081/')], 
                contextPath: 'sample-webapp', 
-               war: '*.war'
+               war: '/var/lib/jenkins/workspace/testingJob/target/*.war'
             }
             }
 
