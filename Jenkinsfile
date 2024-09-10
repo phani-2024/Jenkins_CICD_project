@@ -42,6 +42,16 @@ pipeline {
                deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://107.21.53.147:8081/')], 
                contextPath: 'sample-webapp', 
                war: '**/target/*.war'
+               emailext body: '''The automated test report for ${JOB_NAME} executed via Jenkins has finished its latest run.
+               - Job Name: ${JOB_NAME}
+               - Job Status: ${BUILD_STATUS}
+               - Job Number: ${BUILD_NUMBER}
+               - Job URL: ${BUILD_URL}
+               Please refer to the build information above for additional details.
+               This email is generated automatically by the system.
+               Thanks''', 
+               subject: 'API Test Report as of ${BUILD_TIMESTAMP} — ${JOB_NAME}', 
+               to: 'phanikanaparthi@gmail.com'
             }
             }
 
