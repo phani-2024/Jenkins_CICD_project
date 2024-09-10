@@ -1,6 +1,6 @@
 #!groovy
 pipeline {
-    agent NONE
+    agent none
 
     stages {
         stage('01-validate') {
