@@ -34,8 +34,19 @@ pipeline {
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'snapshotRepo', 
-                version: '1.1-SNAPSHOT'
-            }
+                version: '1.2-SNAPSHOT'
         }
     }
+        stage('06-deploy_into_tomcat7') {
+            steps {
+               sh '/var/lib/jenkins/workspace/testingJob/target/*.war ${WORKSPACE}'
+               deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://107.21.53.147:8081/')], 
+               contextPath: 'sample-webapp', 
+               war: '*.war'
+            }
+            }
+
+
+
+}
 }
