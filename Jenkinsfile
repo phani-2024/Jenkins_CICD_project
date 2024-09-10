@@ -1,6 +1,12 @@
 #!groovy
 pipeline {
+    
     agent any
+
+    tools {
+	    
+	  maven 'maven'
+}
 
     stages {
         stage('01-validate') {
