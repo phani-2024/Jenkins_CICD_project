@@ -3,7 +3,6 @@ pipeline {
     agent any
     tools {
           maven 'maven'
-          nexus 'nexus'
 }
     stages {
         stage('01-validate') {
