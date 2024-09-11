@@ -2,8 +2,8 @@
 pipeline {
     agent { label 'ubuntu' }
     tools {
-          maven 'maven'
-}
+          maven 'maven' 
+    }
     stages {
         stage('validate') {
             steps {
@@ -35,8 +35,8 @@ pipeline {
                 protocol: 'http',
                 repository: 'snapshotRepo',
                 version: '1.3-SNAPSHOT'
+            }
         }
-    }
         stage('deploy_into_tomcat7') {
             steps {
                deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.196.183.85:8081/')],
@@ -54,10 +54,10 @@ pipeline {
                 - Job URL: ${BUILD_URL}
                 Please refer to the build information above for additional details.
                 This email is generated automatically by the system.
-                Thanks\'''', 
+                Thanks''', 
                 subject: 'API Test Report as of ${BUILD_NUMBER} - ${JOB_NAME}', 
-                to: 'phanikanaparthi@gmail.com'  
-                 }
+                to: 'phanikanaparthi@gmail.com'
+             }
         }
     }
 }
