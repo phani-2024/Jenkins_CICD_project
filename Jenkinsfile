@@ -27,7 +27,7 @@ pipeline {
         }
         stage('upload_to_nexus') {
             steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'webapp_project', classifier: '', file: './target/*.war', type: 'war']],
+                nexusArtifactUploader artifacts: [[artifactId: 'webapp_project', classifier: '', file: './target/webapp_project.war', type: 'war']],
                 credentialsId: 'Nexus-creditials',
                 groupId: 'com.phani.cloud',
                 nexusUrl: '18.212.247.249:8081/',
