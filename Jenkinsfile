@@ -46,18 +46,17 @@ pipeline {
         }
         stage('post-build') {
             steps {
-               emailext body: '''The automated test report for ${JOB_NAME} executed via Jenkins has finished its latest run.
-               - Job Name: ${JOB_NAME}
-               - Job Status: ${BUILD_STATUS}
-               - Job Number: ${BUILD_NUMBER}
-               - Job URL: ${BUILD_URL}
-               Please refer to the build information above for additional details.
-               This email is generated automatically by the system.
-               Thanks''',
-               attachLog : true
-               subject: 'API Test Report as of ${BUILD_NUMBER} - ${JOB_NAME}',
-               to: 'phanikanaparthi@gmail.com'
-            
+                emailext attachLog: true, 
+                body: '''The automated test report for ${JOB_NAME} executed via Jenkins has finished its latest run.
+                - Job Name: ${JOB_NAME}
+                - Job Status: ${BUILD_STATUS}
+                - Job Number: ${BUILD_NUMBER}
+                - Job URL: ${BUILD_URL}
+                Please refer to the build information above for additional details.
+                This email is generated automatically by the system.
+                Thanks\'''', 
+                subject: 'API Test Report as of ${BUILD_NUMBER} - ${JOB_NAME}', 
+                to: 'phanikanaparthi@gmail.com'  
                  }
         }
     }
