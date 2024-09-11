@@ -6,12 +6,12 @@
 
   <groupId>com.phani.cloud</groupId>
   <artifactId>webapp_project</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.3-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>webapp_project Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>http://www.cloudphani.shop</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

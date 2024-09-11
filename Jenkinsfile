@@ -1,47 +1,51 @@
 #!groovy
 pipeline {
-    agent any
+    agent { label 'ubuntu' }
     tools {
           maven 'maven'
 }
     stages {
-        stage('01-validate') {
+        stage('validate') {
             steps {
                 sh 'mvn validate'
             }
         }
-        stage('02-compile') {
+        stage('compile') {
             steps {
                 sh 'mvn compile'
             }
         }
-        stage('03-test') {
+        stage('test') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage('04-package') {
+        stage('package') {
             steps {
                 sh 'mvn package'
             }
         }
-        stage('05-upload') {
+        stage('upload_to_nexus') {
             steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'webapp_project', classifier: '', file: '/var/lib/jenkins/workspace/testingJob/target/webapp_project.war', type: 'war']], 
-                credentialsId: 'Nexus-creditials', 
-                groupId: 'com.phani.cloud', 
-                nexusUrl: '107.22.139.151:8081/', 
-                nexusVersion: 'nexus3', 
-                protocol: 'http', 
-                repository: 'snapshotRepo', 
-                version: '1.2-SNAPSHOT'
+                nexusArtifactUploader artifacts: [[artifactId: 'webapp_project', classifier: '', file: './target/*.war', type: 'war']],
+                credentialsId: 'Nexus-creditials',
+                groupId: 'com.phani.cloud',
+                nexusUrl: '18.212.247.249:8081/',
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                repository: 'snapshotRepo',
+                version: '1.3-SNAPSHOT'
         }
     }
-        stage('06-deploy_into_tomcat7') {
+        stage('deploy_into_tomcat7') {
             steps {
-               deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://107.21.53.147:8081/')], 
-               contextPath: 'sample-webapp', 
+               deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.196.183.85:8081/')],
+               contextPath: 'Project-webapp',
                war: '**/target/*.war'
+            }
+        }
+        stage('post-build') {
+            steps {
                emailext body: '''The automated test report for ${JOB_NAME} executed via Jenkins has finished its latest run.
                - Job Name: ${JOB_NAME}
                - Job Status: ${BUILD_STATUS}
@@ -49,10 +53,11 @@ pipeline {
                - Job URL: ${BUILD_URL}
                Please refer to the build information above for additional details.
                This email is generated automatically by the system.
-               Thanks''', 
-               subject: 'API Test Report as of ${BUILD_TIMESTAMP} — ${JOB_NAME}', 
+               Thanks''',
+               attachLog : true
+               subject: 'API Test Report as of ${BUILD_NUMBER} — ${JOB_NAME}',
                to: 'phanikanaparthi@gmail.com'
-            }
+            
             }
 
 
