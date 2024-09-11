@@ -58,9 +58,7 @@ pipeline {
                subject: 'API Test Report as of ${BUILD_NUMBER} - ${JOB_NAME}',
                to: 'phanikanaparthi@gmail.com'
             
-            }
-
-
-
-}
+                 }
+        }
+    }
 }
