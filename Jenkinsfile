@@ -30,16 +30,16 @@ pipeline {
                 nexusArtifactUploader artifacts: [[artifactId: 'webapp_project', classifier: '', file: './target/webapp_project.war', type: 'war']],
                 credentialsId: 'Nexus-creditials',
                 groupId: 'com.phani.cloud',
-                nexusUrl: '18.212.247.249:8081/',
+                nexusUrl: '54.160.243.198:8081/',
                 nexusVersion: 'nexus3',
                 protocol: 'http',
                 repository: 'snapshotRepo',
-                version: '1.3-SNAPSHOT'
+                version: '1.4-SNAPSHOT'
             }
         }
         stage('deploy_into_tomcat7') {
             steps {
-               deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.196.183.85:8081/')],
+               deploy adapters: [tomcat7(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.80.100.251:8081/')],
                contextPath: 'Project-webapp',
                war: '**/target/*.war'
             }
@@ -55,7 +55,7 @@ pipeline {
                 Please refer to the build information above for additional details.
                 This email is generated automatically by the system.
                 Thanks''', 
-                subject: 'API Test Report as of ${BUILD_NUMBER} - ${JOB_NAME}', 
+                subject: 'API Test Report as of ${BUILD_TIMESTAMP} - ${JOB_NAME}', 
                 to: 'phanikanaparthi@gmail.com'
              }
         }
